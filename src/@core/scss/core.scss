@@ -1,0 +1,30 @@
+@import "./base/bootstrap.scss";
+@import "./base/bootstrap-extended.scss";
+@import "./base/colors.scss";
+@import "./base/components.scss";
+
+// Themes
+@import "./base/themes/dark-layout.scss";
+@import "./base/themes/bordered-layout.scss";
+@import "./base/themes/semi-dark-layout.scss";
+@import "./base/core/menu/menu-types/vertical-menu.scss";
+@import "./react/libs/react-select/_react-select.scss";
+@import "./react/libs//tables/react-dataTable-component.scss";
+@import "./base/plugins/forms/form-wizard.scss";
+@import "./react/libs/editor/editor.scss";
+@import "./react/libs/datepicker/datepicker.scss";
+@import "./react/libs/react-hot-toasts/react-hot-toasts.scss";
+
+@import "bs-stepper/dist/css/bs-stepper.min.css";
+@import "~react-datepicker/dist/react-datepicker.css";
+
+// React Specific
+@import "react/index";
+
+.public-DraftStyleDefault-block {
+    margin: 0.3em 0;
+}
+
+.select__multi-value{
+    background-color: #6e5cf5 !important;
+}
