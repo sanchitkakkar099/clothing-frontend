@@ -6,7 +6,7 @@ function Footer() {
     <footer className={"footer footer-light footer-static"}>
       <p className="clearfix mb-0">
         <span className="float-md-start d-block d-md-inline-block mt-25">
-          COPYRIGHT © {new Date().getFullYear()} GTR sante
+          COPYRIGHT © {new Date().getFullYear()} Clothing
           <span className="d-none d-sm-inline-block">
             , All rights Reserved
           </span>

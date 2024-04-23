@@ -6,6 +6,7 @@ import authSlice from "./authSlice";
 
 const appReducer = combineReducers({
   authState:authSlice,
+  [authApi.reducerPath]: authApi.reducer,
 });
 
 export const store = configureStore({

@@ -41,7 +41,7 @@ function Login() {
 
   useEffect(() => {
     if(userToken){
-      navigate('/check-in-list')
+      navigate('/order-list')
     }
   },[userToken])
 
@@ -50,7 +50,7 @@ function Login() {
       email: state?.email,
       password: state?.password,
     };
-    // loginReq(reqData);
+    loginReq(reqData);
   };
 
   useEffect(() => {
@@ -62,7 +62,7 @@ function Login() {
         setErrorMessage('')
         navigate('/order-list')
     } else if(loginRes?.isError){
-      setErrorMessage('Invalid credential')
+      setErrorMessage(loginRes?.error?.data?.message || 'Something went wrong');
     }
   },[loginRes]) 
   return (
@@ -73,6 +73,7 @@ function Login() {
             <div className="auth-wrapper auth-basic px-2">
               <div className="auth-inner my-2">
                 <Card className="mb-0">
+                
                   <CardBody>
                     <Link
                       className="brand-logo"

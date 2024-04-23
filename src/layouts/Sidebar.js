@@ -12,7 +12,6 @@ function Sidebar() {
   const location = useLocation();
   const userInfo = useSelector((state) => state?.authState.userInfo)
   const [menu, setMenu] = useState(sideMenu);
-  console.log("sideMenu", menu);
 
   const scrollMenu = (container) => {
     if (shadowRef && container.scrollTop > 0) {
@@ -79,7 +78,7 @@ function Sidebar() {
               <span className="brand-logo">
                 {/* <img src={Logo} alt="logo" /> */}
               </span>
-              <h2 className="brand-text mb-0">GTR Santé</h2>
+              <h2 className="brand-text mb-0">Clothing</h2>
             </NavLink>
           </li>
           <li className="nav-item nav-toggle">

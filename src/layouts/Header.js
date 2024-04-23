@@ -66,41 +66,15 @@ function Header() {
     });
   };
 
-  useEffect(() => {
-    console.log("loginBackAdminRes",loginBackAdminRes?.data);
-    if (loginBackAdminRes?.isSuccess && loginBackAdminRes?.data) {
-      console.log("loginAs", loginBackAdminRes?.data);
-      cookies.set("gtrsante", loginBackAdminRes?.data?.data?.token);
-      cookies.set("gtrsante_user", loginBackAdminRes?.data?.data);
-      dispatch(setUserToken(loginBackAdminRes?.data?.data?.token))
-      dispatch(setUserInfo(loginBackAdminRes?.data?.data,))
-      navigate("/");
-    }
-  },[loginBackAdminRes])
 
   const handleLogout = () => {
     // localStorage.clear()
-    cookies.remove("gtrsante");
-    cookies.remove("gtrsante_user");
+    cookies.remove("clothing");
+    cookies.remove("clothing_user");
     cookies.remove("isLoggedIn");
-    cookies.remove("lastActiveTime");
-    cookies.remove("savedTimerValue");
     dispatch(setUserInfo({}));
     dispatch(setUserToken(""));
     navigate('/')
-  }
-  const handleChangeLanguage = async (e) => {
-    // console.log(e.target.checked);
-    if (e.target.checked) {
-      setIsFrench(true);
-      cookies.set("isfrench", true)
-      dispatch(setIsFrench(true))
-    } else {
-      setIsFrench(false);
-      cookies.set("isfrench", false)
-      dispatch(setIsFrench(false))
-    }
-    // console.log('isFrench66666',isFrench)
   }
 
   return (
@@ -120,15 +94,6 @@ function Header() {
           </div>
         </div>
         <ul className="nav navbar-nav align-items-center ms-auto">
-          <Form>
-            <FormGroup switch>
-              <Label check>French</Label>
-              <Input type="switch"
-                checked={isFrench}
-                role="switch"
-                onChange={(e) => { handleChangeLanguage(e) }} />
-            </FormGroup>
-          </Form>
           <UncontrolledDropdown tag="li" className="dropdown-user nav-item">
             <DropdownToggle
               href="/"
