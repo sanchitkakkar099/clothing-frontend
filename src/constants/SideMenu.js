@@ -9,4 +9,9 @@ export const sideMenu = [
     to: "/order-list",
     icon: <Layers />,
   },
+  {
+    label: "App Install History",
+    to: "/install-app",
+    icon: <Layers />,
+  },
 ];

@@ -12,10 +12,10 @@ export const orderSlice = createSlice({
   reducers: {
     getOrder: (state, { payload }) => {
       state.orderList = payload;
-    },
-    setOrderView: (state, { payload }) => {
+    },       
+    setOrderView: (state, { payload }) => {    
       state.orderView = payload;
-    },
+    },   
     setOrderEdit: (state, { payload }) => {
       state.orderEdit = payload;
     },

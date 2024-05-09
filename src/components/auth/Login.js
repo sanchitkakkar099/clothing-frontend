@@ -23,11 +23,11 @@ import { setUserInfo, setUserToken } from "../../redux/authSlice";
 const cookies = new Cookies();
 
 function Login() {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [errorMessage, setErrorMessage] = useState("");
   const [passwordShow, setPasswordShow] = useState(false);
-  const userToken = useSelector((state) => state?.authState.userToken)
+  const userToken = useSelector((state) => state?.authState.userToken);
   const [loginReq, loginRes] = useLoginAuthMutation();
 
   const {
@@ -40,10 +40,10 @@ function Login() {
   } = useForm();
 
   useEffect(() => {
-    if(userToken){
-      navigate('/order-list')
+    if (userToken) {
+      navigate("/order-list");
     }
-  },[userToken])
+  }, [userToken]);
 
   const handleLogin = (state) => {
     const reqData = {
@@ -54,17 +54,17 @@ function Login() {
   };
 
   useEffect(() => {
-    if(loginRes?.isSuccess){
+    if (loginRes?.isSuccess) {
       cookies.set("clothing", loginRes?.data?.data?.token);
       cookies.set("clothing_user", loginRes?.data?.data);
-        dispatch(setUserToken(loginRes?.data?.data?.token))
-        dispatch(setUserInfo(loginRes?.data?.data))
-        setErrorMessage('')
-        navigate('/order-list')
-    } else if(loginRes?.isError){
-      setErrorMessage(loginRes?.error?.data?.message || 'Something went wrong');
+      dispatch(setUserToken(loginRes?.data?.data?.token));
+      dispatch(setUserInfo(loginRes?.data?.data));
+      setErrorMessage("");
+      navigate("/order-list");
+    } else if (loginRes?.isError) {
+      setErrorMessage(loginRes?.error?.data?.message || "Something went wrong");
     }
-  },[loginRes]) 
+  }, [loginRes]);
   return (
     <div className={"blank-page"}>
       <div className="app-content content">
@@ -73,7 +73,6 @@ function Login() {
             <div className="auth-wrapper auth-basic px-2">
               <div className="auth-inner my-2">
                 <Card className="mb-0">
-                
                   <CardBody>
                     <Link
                       className="brand-logo"
@@ -178,7 +177,7 @@ function Login() {
                                 <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
                                 <line x1="1" y1="1" x2="23" y2="23"></line>
                               </svg>
-                            )}
+                            )}     
                           </span>
                         </div>
                         {errors?.password && (
@@ -188,7 +187,7 @@ function Login() {
                         )}
                       </div>
                       <FormFeedback className="mb-1">
-                            {errorMessage}
+                        {errorMessage}
                       </FormFeedback>
                       <div className="form-check mb-1">
                         <Input type="checkbox" id="remember-me" />

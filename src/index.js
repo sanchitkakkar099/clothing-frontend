@@ -5,6 +5,8 @@ import reportWebVitals from './reportWebVitals';
 import "../node_modules/bootstrap/dist/css/bootstrap-grid.css";
 import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from './routes';
+import { Suspense } from 'react';
+import { Loader } from 'react-feather';
 import { Provider } from 'react-redux';
 import { store } from "./redux/store";
 
@@ -14,6 +16,7 @@ import FallBackSpinner from "./components/common/FallBackSpinner";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <Suspense fallback={<Loader/>}>
   <React.StrictMode fallback={<FallBackSpinner />}>
     <Provider store={store}>
       <BrowserRouter>
@@ -45,6 +48,7 @@ root.render(
       </BrowserRouter>
     </Provider>
   </React.StrictMode>
+  </Suspense>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -5,35 +5,69 @@ const user = JSON.parse(auth);
 const baseUrl =
   process.env.NODE_ENV === "development"
     ? process.env.REACT_APP_DEV_URL
-    : process.env.REACT_APP_PROD_URL;
-
+    : process.env.REACT_APP_PROD_URL;           
+                                      
 export const authApi = createApi({
   tagTypes: ["auth"],
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${baseUrl}/`,
   }),
-  endpoints: (builder) => ({
+  endpoints: (builder) => ({                       
     loginAuth: builder.mutation({
       query: (payload) => ({
         url: "admin/login",
         method: "POST",
         body: payload,
       }),
-      invalidatesTags: ["auth"],
-    }),
-    loginAsAdmin: builder.mutation({
+      invalidatesTags: ["auth"],                  
+    }),                          
+    loginAsAdmin: builder.mutation({                      
       query: (payload) => ({
-        url: "admin/staff/login/admin",
+        url: "admin/staff/login/admin",      
         method: "POST",
         body: payload,
       }),
-      providesTags: ["auth"],
+      providesTags: ["auth"], 
     }),
   }),
 });
 export const { useLoginAuthMutation, useLoginAsAdminMutation } = authApi;
 
+export const ordersApi = createApi({
+  tagTypes: ["orders"],
+  reducerPath: "ordersApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${baseUrl}/`,     
+  }),          
+  endpoints: (builder) => ({          
+      shopifyOrders: builder.query({
+      query: () => ({
+        url: "orders/list",       
+        method: "GET",
+      }),
+      providesTags: ["orders"],
+    }),
+  }),
+});
+export const { useShopifyOrdersQuery } = ordersApi;
 
+export const installappApi = createApi({
+  tagTypes: ["appHistory"],
+  reducerPath: "installappApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${baseUrl}/`,     
+  }),          
+  endpoints: (builder) => ({          
+      appInstallData: builder.query({
+      query: () => ({
+        url: "installapp/list",       
+        method: "GET",
+      }),
+      providesTags: ["installapp"],
+    }),
+  }),
+});
+export const { useAppInstallDataQuery } = installappApi;
 
 
