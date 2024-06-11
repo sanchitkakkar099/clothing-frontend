@@ -14,4 +14,9 @@ export const sideMenu = [
     to: "/install-app",
     icon: <Layers />,
   },
+  {
+    label: "App Approval Requests",
+    to: "/approval-requests",
+    icon: <Layers />,
+  },
 ];

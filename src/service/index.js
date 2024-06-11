@@ -52,6 +52,32 @@ export const ordersApi = createApi({
 });
 export const { useShopifyOrdersQuery } = ordersApi;
 
+export const approvalApi = createApi({
+  tagTypes: ["appApproval"],
+  reducerPath: "approvalApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${baseUrl}/`,     
+  }),          
+  endpoints: (builder) => ({          
+      shopifyAppapproval: builder.query({
+      query: () => ({
+        url: "approval/request",       
+        method: "GET",
+      }),
+      providesTags: ["appApproval"],
+    }),
+    changeApproval: builder.mutation({
+      query:(payload) => ({
+        url:"appapproval/change",
+        method:"POST",
+        body:payload,
+      }),
+      providesTags:["appApproval"],
+    }),
+  }),
+});
+export const { useShopifyAppapprovalQuery,useChangeApprovalMutation } = approvalApi;
+
 export const installappApi = createApi({
   tagTypes: ["appHistory"],
   reducerPath: "installappApi",

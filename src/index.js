@@ -9,7 +9,6 @@ import { Suspense } from 'react';
 import { Loader } from 'react-feather';
 import { Provider } from 'react-redux';
 import { store } from "./redux/store";
-
 import './@core/assets/fonts/feather/iconfont.css';
 import "./@core/scss/core.scss";
 import FallBackSpinner from "./components/common/FallBackSpinner";
