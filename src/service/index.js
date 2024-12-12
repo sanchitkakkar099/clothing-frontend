@@ -30,9 +30,17 @@ export const authApi = createApi({
       }),
       providesTags: ["auth"], 
     }),
+    vendorSignUp: builder.mutation({                      
+      query: (payload) => ({
+        url: "admin",      
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["auth"], 
+    }), 
   }),
 });
-export const { useLoginAuthMutation, useLoginAsAdminMutation } = authApi;
+export const { useLoginAuthMutation, useLoginAsAdminMutation,useVendorSignUpMutation } = authApi;
 
 export const ordersApi = createApi({
   tagTypes: ["orders"],
@@ -79,7 +87,7 @@ export const approvalApi = createApi({
 export const { useShopifyAppapprovalQuery,useChangeApprovalMutation } = approvalApi;
 
 export const installappApi = createApi({
-  tagTypes: ["appHistory"],
+  tagTypes: ["installapp"],
   reducerPath: "installappApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${baseUrl}/`,     
@@ -96,4 +104,93 @@ export const installappApi = createApi({
 });
 export const { useAppInstallDataQuery } = installappApi;
 
+export const storeappInfoApi = createApi({
+  tagTypes: ["storeappInfo"],
+  reducerPath: "storeappInfoApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${baseUrl}/`,     
+  }),          
+  endpoints: (builder) => ({          
+      creatappInfo: builder.mutation({
+      query: (payload) => ({
+        url: "storeappInfo",      
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["storeappInfo"],
+    }),        
+      storeInfoData: builder.mutation({
+      query: (payload) => ({
+        url: "storeappInfo/list/by/storename",       
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["storeappInfo"],
+    }),
+  }),
+});
+export const { useCreatappInfoMutation,useStoreInfoDataMutation } = storeappInfoApi;
 
+export const productsApi = createApi({
+  tagTypes: ["products"],
+  reducerPath: "productsApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${baseUrl}/`,     
+  }),          
+  endpoints: (builder) => ({          
+      fetchProducts: builder.mutation({
+      query: (payload) => ({
+        url: "products/list",      
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["products"],
+    }),        
+      createProduct: builder.mutation({
+      query: (payload) => ({
+        url: "products/create",       
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["products"],
+    }),
+  }),
+});
+export const { useFetchProductsMutation,useCreateProductMutation } = productsApi;
+
+
+export const dashboardApi = createApi({
+  tagTypes : ["dashboard"],
+  reducerPath: "dashboardApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${baseUrl}/`,
+  }),
+  endpoints: (builder) => ({
+    appStatus: builder.mutation({
+      query : (payload) => ({
+        url : "vendor/app/status",
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["dashboard"],
+    }),
+    appStatusUpdate: builder.mutation({
+      query : (payload) => ({
+        url : "vendor/app/status",
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["dashboard"],
+    }),
+    productCount: builder.mutation({
+       query : (payload) => ({
+          url : "vendor/products",
+          method: "POST",
+          body: payload,
+       }),
+       providesTags: ["dashboard"],
+    }),
+  })
+})
+
+export const {useAppStatusMutation,useAppStatusUpdateMutation,useProductCountMutation} = dashboardApi

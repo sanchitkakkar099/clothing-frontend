@@ -3,7 +3,9 @@ import {
   authApi,
   ordersApi,
   installappApi,
-  approvalApi
+  approvalApi,
+  storeappInfoApi,
+  productsApi,
 } from "../service";
 import authSlice from "./authSlice";
 import orderSlice from "./orderSlice"
@@ -17,7 +19,9 @@ const appReducer = combineReducers({
   [authApi.reducerPath]: authApi.reducer,
   [ordersApi.reducerPath]:ordersApi.reducer,
   [installappApi.reducerPath]:installappApi.reducer,
-  [approvalApi.reducerPath]:approvalApi.reducer
+  [approvalApi.reducerPath]:approvalApi.reducer,
+  [storeappInfoApi.reducerPath]:storeappInfoApi.reducer,
+  [productsApi.reducerPath]:productsApi.reducer,
 });
 
 export const store = configureStore({
@@ -27,6 +31,8 @@ export const store = configureStore({
       authApi.middleware,
       ordersApi.middleware,
       installappApi.middleware,
-      approvalApi.middleware
+      approvalApi.middleware,
+      storeappInfoApi.middleware,
+      productsApi.middleware
     ]),
 });

@@ -11,10 +11,15 @@ export const approvalSlice = createSlice({
     getapproval: (state, { payload }) => {
       state.appApproval = payload;
     },
+    setShopifyAppUser: (state, { payload }) => {    
+      console.log("payload from login page",payload);
+      state.shopifyappUser = payload;
+  }
   },
 });
 
 export const {
   getapproval,
+  setShopifyAppUser
 } = approvalSlice.actions;
 export default approvalSlice.reducer;

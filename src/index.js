@@ -4,7 +4,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "../node_modules/bootstrap/dist/css/bootstrap-grid.css";
 import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
-import { privateRoutes, publicRoutes } from './routes';
+import { AdminRoutes, publicRoutes,VendorRoutes } from './routes';
 import { Suspense } from 'react';
 import { Loader } from 'react-feather';
 import { Provider } from 'react-redux';
@@ -20,7 +20,7 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          {privateRoutes.map(({path,Component}) => (
+          {AdminRoutes.map(({path,Component}) => (
             <Route
             key={path}
             path={path}
@@ -29,6 +29,17 @@ root.render(
                 <Component/>
               </App>
             }
+            ></Route>
+          ))}
+          { VendorRoutes.map(({ path, Component }) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                <App>
+                  <Component />
+                </App>
+              }
             ></Route>
           ))}
           {publicRoutes.map(({ path, Component }) => (

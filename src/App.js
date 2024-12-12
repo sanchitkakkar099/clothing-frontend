@@ -16,6 +16,7 @@ function App({ children }) {
   }, [userToken])
   return (
     <div className="wrapper vertical-layout navbar-floating footer-static vertical-menu-modern menu-expanded">
+    <Toaster position="top-center" />
       <Sidebar />
       <Header />
       <PageContent children={children} />

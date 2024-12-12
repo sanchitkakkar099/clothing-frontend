@@ -50,7 +50,7 @@ function InstallApp() {
                 <Table>
                   <thead>
                     <tr>
-                      <th>Installed on shop</th>
+                      <th>Installed on Store</th>
                       <th>Installed/UnInstalled On</th>
                       <th>App Status</th>
                     </tr>
@@ -61,14 +61,19 @@ function InstallApp() {
                       // Render table if resinstallAppdata is not empty
                       resinstallAppdata.data.map((vendor, index) => (
                         <tr key={index}>
-                          <td>{vendor.shop_name.split(".")[0]}</td>{" "}
+                          <td>{vendor?.storeDomain?.split(".")[0]}</td>{" "}
                           {/* Extract shop name before dot */}
                           <td>
-                            {new Date(
-                              parseInt(vendor.timestamp) * 1000
-                            ).toLocaleDateString()}
+                            {new Date(vendor?.createdAt).toLocaleDateString(
+                              "en-GB",
+                              {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "2-digit",
+                              }
+                            )}
                           </td>
-                          <td>{vendor.isAppinstall?"Active":"Inactive"}</td>
+                          <td>{vendor.isAppinstall ? "Active" : "Inactive"}</td>
                         </tr>
                       ))
                     ) : (

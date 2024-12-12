@@ -20,16 +20,17 @@ import { Controller, useForm } from "react-hook-form";
 import Cookies from "universal-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo, setUserToken } from "../../redux/authSlice";
+import { setShopifyAppUser } from "../../redux/approvalSlice";
 const cookies = new Cookies();
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [errorMessage, setErrorMessage] = useState("");
   const [passwordShow, setPasswordShow] = useState(false);
   const userToken = useSelector((state) => state?.authState.userToken);
   const [loginReq, loginRes] = useLoginAuthMutation();
-
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const {
     control,
     handleSubmit,
@@ -39,28 +40,47 @@ function Login() {
     setError,
   } = useForm();
 
-  useEffect(() => {
-    if (userToken) {
-      navigate("/order-list");
-    }
-  }, [userToken]);
-
   const handleLogin = (state) => {
     const reqData = {
       email: state?.email,
+      storename: state?.storename,
       password: state?.password,
     };
     loginReq(reqData);
   };
 
+  const handleSignUp = (state) => {
+    console.log("state", state);
+    navigate("/store-info");
+  };
+
+  console.log("loginRes", loginRes);
   useEffect(() => {
     if (loginRes?.isSuccess) {
       cookies.set("clothing", loginRes?.data?.data?.token);
       cookies.set("clothing_user", loginRes?.data?.data);
       dispatch(setUserToken(loginRes?.data?.data?.token));
       dispatch(setUserInfo(loginRes?.data?.data));
+      dispatch(setShopifyAppUser(loginRes?.data));
       setErrorMessage("");
-      navigate("/order-list");
+      const { role } = loginRes?.data?.data;
+      // eslint-disable-next-line default-case
+      switch (role) {
+        case "Admin":
+          navigate("/order-list");
+          break;
+        case "Vendor":
+          if(!loginRes?.data?.data?.appInfoSubmitted){
+            navigate("/store-info");
+            return;
+          }else{
+          navigate("/dashboard");
+          break;
+          }
+        // default:
+        //     navigate('/'); // Navigate to a default page if the role is not recognized
+        //     break;
+      }
     } else if (loginRes?.isError) {
       setErrorMessage(loginRes?.error?.data?.message || "Something went wrong");
     }
@@ -116,6 +136,27 @@ function Login() {
                         )}
                       </div>
                       <div className="mb-1">
+                        <Label className="form-label" for="storename">
+                          Shop domain
+                        </Label>
+                        <Controller
+                          id="storename"
+                          name="storename"
+                          control={control}
+                          rules={{
+                            required: "Store name is required",
+                          }}
+                          render={({ field }) => (
+                            <Input type="storename" {...field} />
+                          )}
+                        />
+                        {errors?.storename && (
+                          <FormFeedback>
+                            {errors?.storename?.message}
+                          </FormFeedback>
+                        )}
+                      </div>
+                      <div className="mb-1">
                         <div className="d-flex justify-content-between">
                           <Label className="form-label" for="login-password">
                             Password
@@ -155,9 +196,9 @@ function Login() {
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                               >
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                 <circle cx="12" cy="12" r="3"></circle>
@@ -170,14 +211,14 @@ function Login() {
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                               >
                                 <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
                                 <line x1="1" y1="1" x2="23" y2="23"></line>
                               </svg>
-                            )}     
+                            )}
                           </span>
                         </div>
                         {errors?.password && (
@@ -198,30 +239,11 @@ function Login() {
                       <Button color="primary" block>
                         Sign in
                       </Button>
+                      <div className="form-check"></div>
+                      <Button color="primary" block onClick={handleSignUp}>
+                        Vendor SignUp
+                      </Button>
                     </Form>
-                    {/* <p className="text-center mt-2">
-                      <span className="me-25">New on our platform?</span>
-                      <Link to="/pages/register-basic">
-                        <span>Create an account</span>
-                      </Link>
-                    </p> */}
-                    {/*<div className="divider my-2">
-                      <div className="divider-text">or</div>
-                    </div>
-                    <div className="auth-footer-btn d-flex justify-content-center">
-                      <Button color="facebook">
-                        <Facebook size={14} />
-                      </Button>
-                      <Button color="twitter">
-                        <Twitter size={14} />
-                      </Button>
-                      <Button color="google">
-                        <Mail size={14} />
-                      </Button>
-                      <Button className="me-0" color="github">
-                        <GitHub size={14} />
-                      </Button>
-                    </div>*/}
                   </CardBody>
                 </Card>
               </div>

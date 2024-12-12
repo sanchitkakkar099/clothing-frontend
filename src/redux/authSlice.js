@@ -28,6 +28,13 @@ export const authSlice = createSlice({
     getUserInfo: (state, { payload }) => {
         state.userInfo = payload;
     },
+    updateUserInfoField: (state, action) => {
+      // Update only specific fields of userInfo
+      const { key, value } = action.payload;
+      if (state.userInfo) {
+        state.userInfo[key] = value;
+      }
+    },
     getIsFrench: (state, { payload }) => {
       state.isFrench = payload;
     },
@@ -47,6 +54,7 @@ export const {
   setIsFrench,
   getUserToken,
   getUserInfo,
+  updateUserInfoField,
   getIsFrench,
   setIsLoggedIn,
   setTimer
