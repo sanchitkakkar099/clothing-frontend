@@ -181,7 +181,7 @@ export default function Dashboard() {
           <b> {userInfo?.isAppapproved ? "Approved" : "Not Approved"}</b>
         </CardBody>
       </Card>
-      <Card
+      {/* <Card
         style={{
           width: "20rem",
           margin: "1rem",
@@ -189,20 +189,21 @@ export default function Dashboard() {
       >
         <CardBody>
           <CardTitle tag="h5">Store Profile</CardTitle>
-          Profile Status: {/* <b>{data1?.data}</b> */}
+          Profile Status: 
+          <b>{data1?.data}</b>
           <b></b>
         </CardBody>
         <CardBody>
           <Button
             color="primary"
             onClick={handleStoreProfile}
-            //   disabled={data1?.success === true}
+              disabled={data1?.success === true}
           >
             Store Profile Details
           </Button>
-          {/* {profileModal && <StoreProfileView modal={profileModal} setModal={setProfileModal} productCount= {data?.countData?.count.toString()} storeData={shopDetails} />} */}
+          {profileModal && <StoreProfileView modal={profileModal} setModal={setProfileModal} productCount= {data?.countData?.count.toString()} storeData={shopDetails} />}
         </CardBody>
-      </Card>
+      </Card> */}
       <Card
         style={{
           width: "20rem",
