@@ -35,7 +35,7 @@ function OrderList() {
   const vendorData = {}; // Initialize as an empty object, not an array
 
   const vendorValues = (line_items) => {
-    line_items.forEach((item) => {
+    line_items?.forEach((item) => {
       const { vendor, title, price, quantity } = item;
       if (vendorData[vendor]) {
         vendorData[vendor].totalQuantity += quantity;
@@ -51,8 +51,8 @@ function OrderList() {
     });
   };
   // Call vendorValues to aggregate data
-  orderList.forEach((cs) => {
-    vendorValues(cs.line_items);
+  orderList?.forEach((cs) => {
+    vendorValues(cs?.line_items);
   });
 
   const onViewAction = (e, st) => {
