@@ -9,15 +9,18 @@ import { Suspense } from 'react';
 import { Loader } from 'react-feather';
 import { Provider } from 'react-redux';
 import { store } from "./redux/store";
+import { VendorOrderProvider } from './components/context/VendorOrderContext';
 import './@core/assets/fonts/feather/iconfont.css';
 import "./@core/scss/core.scss";
 import FallBackSpinner from "./components/common/FallBackSpinner";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  // <VendorOrderProvider>
   <Suspense fallback={<Loader/>}>
   <React.StrictMode fallback={<FallBackSpinner />}>
     <Provider store={store}>
+    <VendorOrderProvider>
       <BrowserRouter>
         <Routes>
           {AdminRoutes.map(({path,Component}) => (
@@ -56,9 +59,11 @@ root.render(
           ))}
         </Routes>
       </BrowserRouter>
+      </VendorOrderProvider>
     </Provider>
   </React.StrictMode>
   </Suspense>
+  // {/* </VendorOrderProvider> */}
 );
 
 // If you want to start measuring performance in your app, pass a function

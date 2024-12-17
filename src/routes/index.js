@@ -8,6 +8,7 @@ const Signup = lazy(() => import("../components/auth/SignUp"));
 const StoreInfo = lazy(() => import("../components/storeInfo/StoreInfo"));
 const ProductList = lazy(() => import("../components/vendorProducts/ProductList"));
 const Dashboard = lazy(() => import("../components/dashboard/Dashboard"));
+const VendorOrder = lazy(() => import("../components/vendorOrders/OrderList"));
 export const AdminRoutes = [
   { path: "/order-list", Component: OrderList },
   { path: "/install-app", Component: InstallApp },
@@ -19,6 +20,7 @@ export const AdminRoutes = [
 export const VendorRoutes = [
   {path:"/dashboard",Component:Dashboard},
   {path: "/product-list",Component:ProductList},
+  {path: "/vendor-orders",Component:VendorOrder}
 ]
 
 

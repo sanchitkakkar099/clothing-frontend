@@ -5,7 +5,9 @@ const user = JSON.parse(auth);
 const baseUrl =
   process.env.NODE_ENV === "development"
     ? process.env.REACT_APP_DEV_URL
-    : process.env.REACT_APP_PROD_URL;           
+    : process.env.REACT_APP_PROD_URL;  
+    
+    console.log("baseUrl",baseUrl);
                                       
 export const authApi = createApi({
   tagTypes: ["auth"],
@@ -127,9 +129,26 @@ export const storeappInfoApi = createApi({
       }),
       providesTags: ["storeappInfo"],
     }),
+    storeOrders: builder.mutation({
+      query: (payload) => ({
+        url: "storeappInfo/vendor/orders",       
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["storeappInfo"],
+    }),
+    storeProductCount: builder.mutation({
+      query: (payload) => ({
+        url: "storeappInfo/product/count",       
+        method: "POST",
+        body: payload,
+      }),
+      providesTags: ["storeappInfo"],
+    }),
   }),
+   
 });
-export const { useCreatappInfoMutation,useStoreInfoDataMutation } = storeappInfoApi;
+export const { useCreatappInfoMutation,useStoreInfoDataMutation,useStoreOrdersMutation,useStoreProductCountMutation } = storeappInfoApi;
 
 export const productsApi = createApi({
   tagTypes: ["products"],

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect} from "react";
+import { useContext } from "react";
 import {
   Card,
   CardBody,
@@ -15,8 +16,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   useAppStatusMutation,
   useAppStatusUpdateMutation,
+  useStoreProductCountMutation,
+  useStoreOrdersMutation,
 } from "../../service";
 import { updateUserInfoField } from "../../redux/authSlice";
+import VendorOrderContext from "../context/VendorOrderContext";
+import { setorderList } from "../../redux/vendorOrderSlice";
 export default function Dashboard() {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -31,7 +36,12 @@ export default function Dashboard() {
   const [profileModal, setProfileModal] = useState(false);
   const [reqAppInfo, resAppInfo] = useAppStatusMutation();
   const [reqAppStatusUpdate, resAppStatusUpdate] = useAppStatusUpdateMutation();
-  const [vendorOrder, setVendorOrder] = useState();
+  const [reqProductCount,resProductCount] = useStoreProductCountMutation();
+  const [reqOrders, resOrders] = useStoreOrdersMutation();
+  const [productCount,setProductuctCount] = useState();
+  const [vendorOrder, setVendorOrder] = 
+//   useState();
+ useContext(VendorOrderContext);
   const toggleModal = () => {
     setShowModal(!showModal);
   };
@@ -66,21 +76,44 @@ export default function Dashboard() {
     fetchStoreStatus();
   }, []);
 
+
   useEffect(() => {
-    const orderResponse = async () => {
-      try {
-        const response = await fetch("/api/orders/get/all");
-        if (response.ok) {
-          const responseData = await response.json();
-          // console.log("oders response", responseData);
-          //   setVendorOrder(responseData);
+    const fetchProductCount = async () => {
+      const storename = userInfo?.storename;
+      console.log("storename", storename);
+  
+      if (storename) {
+        try {
+          const response = await reqProductCount({storename:storename});
+          console.log('Product count response:', response);
+          setProductuctCount(response?.data?.productCount);
+        } catch (error) {
+          console.error('Error fetching product count:', error);
         }
-      } catch (error) {
-        console.error("Error fetching order data:", error.message);
       }
     };
+  
+    fetchProductCount();
+  }, [reqProductCount, userInfo?.storename]);
+  
+
+  useEffect(() => {
+    const orderResponse = async () => {
+        const storename = userInfo?.storename;
+        console.log("storename in fetch order api",storename);
+        if (storename) {
+            try {
+              const response = await reqOrders({storename:storename});
+              console.log('Order response:', response);
+              dispatch(setorderList(response?.data?.orderData));
+              setVendorOrder(response?.data?.orderData);
+            } catch (error) {
+              console.error('Error fetching product count:', error);
+            }
+          }
+    };
     orderResponse();
-  }, []);
+  }, [reqOrders]);
   console.log("isActive", isActive);
 
   const handleConfirmAction = async () => {
@@ -91,7 +124,6 @@ export default function Dashboard() {
       isAppinstall: !userInfo?.isAppinstall,
       isAppUpdate: true,
     };
-    // const response =
     console.log("reqData", reqData);
     const responseData = await reqAppInfo(reqData);
     console.log("responseData", responseData);
@@ -126,15 +158,15 @@ export default function Dashboard() {
   };
 
   const handleViewOrders = () => {
-    navigate("/order-list", { state: { vendorOrder } });
+    navigate("/vendor-orders", { state: { vendorOrder } });
   };
 
   const handleStoreProfile = () => {
     setProfileModal(true);
   };
   console.log("orderslength", vendorOrder?.orders?.orders?.length);
-  console.log("state value", state);
-  console.log("vendor Order", vendorOrder?.orders);
+  console.log("productCount value", productCount);
+  console.log("vendor Order", vendorOrder);
   return (
     <div className="d-flex  align-item-start flex-wrap">
       <Card
@@ -220,9 +252,9 @@ export default function Dashboard() {
           <CardTitle tag="h5">ProductList</CardTitle>
           <CardSubtitle className="mb-2 text-muted" tag="h6">
             Total Products:
-            {/* {" "} <b>
-            {data?.countData?.count.toString() 
-            || "Loading..."}</b> */}
+            {" "} <b>
+            {productCount
+            || "Loading..."}</b>
           </CardSubtitle>
         </CardBody>
         <CardBody>
@@ -243,8 +275,8 @@ export default function Dashboard() {
           <CardSubtitle className="mb-2 text-muted" tag="h6">
             Total Orders:{" "}
             <b>
-              {vendorOrder?.orders
-                ? vendorOrder?.orders?.orders?.length.toString()
+              {vendorOrder 
+                ? vendorOrder?.length.toString()
                 : "Loading..."}
             </b>
             {/* {(vendorOrder?.orders || vendorOrder?.orders?.length.toString())?vendorOrder?.orders?.length:"Loading..."} */}

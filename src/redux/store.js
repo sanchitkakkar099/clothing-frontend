@@ -11,11 +11,13 @@ import authSlice from "./authSlice";
 import orderSlice from "./orderSlice"
 import installAppSlice from "./installAppSlice";
 import approvalSlice from "./approvalSlice";
+import vendorOrderSlice from "./vendorOrderSlice";
 const appReducer = combineReducers({
   authState:authSlice,
   orderState:orderSlice,
   installAppDataState:installAppSlice,
   appApprovalState:approvalSlice,
+  vendorOrderState: vendorOrderSlice,
   [authApi.reducerPath]: authApi.reducer,
   [ordersApi.reducerPath]:ordersApi.reducer,
   [installappApi.reducerPath]:installappApi.reducer,
